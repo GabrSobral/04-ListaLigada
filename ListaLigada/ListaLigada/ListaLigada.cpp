@@ -1,4 +1,5 @@
 
+#include <cstdlib>
 #include <iostream>
 using namespace std;
 
@@ -27,8 +28,7 @@ int main()
 	menu();
 }
 
-void menu()
-{
+void menu() {
 	int op = 0;
 	while (op != 7) {
 		system("cls"); // somente no windows
@@ -70,10 +70,9 @@ void menu()
 	}
 }
 
-void inicializar()
-{
+void inicializar() {
 
-	// se a lista já possuir elementos
+	// se a lista jï¿½ possuir elementos
 	// libera a memoria ocupada
 	NO* aux = primeiro;
 	while (aux != NULL) {
@@ -99,8 +98,7 @@ void exibirQuantidadeElementos() {
 
 }
 
-void exibirElementos()
-{
+void exibirElementos() {
 	if (primeiro == NULL) {
 		cout << "Lista vazia \n";
 		return;
@@ -115,8 +113,7 @@ void exibirElementos()
 	}
 }
 
-void inserirElemento()
-{
+void inserirElemento() {
 	// aloca memoria dinamicamente para o novo elemento
 	NO* novo = (NO*)malloc(sizeof(NO));
 	if (novo == NULL)
@@ -143,22 +140,50 @@ void inserirElemento()
 	}
 }
 
-void excluirElemento()
-{
-	
+void excluirElemento() {
+	int inputValue;
+	cout << "Digite o valor que quer excluir: ";
+	cin >> inputValue;
+
+	NO* aux = primeiro;
+	while (aux->prox != NULL) {
+		NO* nextElement = aux->prox;
+
+		if (primeiro->valor == inputValue) {
+			free(primeiro);
+			primeiro = nextElement;
+			break;
+		}
+
+		if(nextElement->valor == inputValue) {
+			aux->prox = nextElement->prox;
+			free(nextElement);
+			break;
+		}
+		aux = aux->prox;
+	}
 }
 
-void buscarElemento()
-{
-	
+void buscarElemento() {
+	int inputValue;
+	cout << "Digite o valor que quer excluir: ";
+	cin >> inputValue;
+
+	NO* element = posicaoElemento(inputValue);
+
+	if(element == NULL) {
+		cout << "Nenhum elemento foi encontrado com esse valor.";
+		return;
+	}
+
+	cout << element->valor;
 }
 
 
 
 // retorna um ponteiro para o elemento buscado
-// ou NULL se o elemento não estiver na lista
-NO* posicaoElemento(int numero)
-{
+// ou NULL se o elemento nï¿½o estiver na lista
+NO* posicaoElemento(int numero) {
 	NO* aux = primeiro;
 	while (aux != NULL) {
 		if (aux->valor == numero)
