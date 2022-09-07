@@ -32,6 +32,8 @@ void menu() {
 	int op = 0;
 	while (op != 7) {
 		system("cls"); // somente no windows
+		// system("clear"); // somente no linux e no powershell
+
 		cout << "Menu Lista Ligada";
 		cout << endl << endl;
 		cout << "1 - Inicializar Lista \n";
@@ -66,12 +68,12 @@ void menu() {
 			break;
 		}
 
-		system("pause"); // somente no windows
+		// system("pause"); // somente no windows
+		system("read -p 'Press [Enter] key to start ...'"); // somente no linux
 	}
 }
 
 void inicializar() {
-
 	// se a lista j� possuir elementos
 	// libera a memoria ocupada
 	NO* aux = primeiro;
@@ -83,7 +85,6 @@ void inicializar() {
 
 	primeiro = NULL;
 	cout << "Lista inicializada \n";
-
 }
 
 void exibirQuantidadeElementos() {
@@ -125,6 +126,13 @@ void inserirElemento() {
 	cin >> novo->valor;
 	novo->prox = NULL;
 
+	NO* alreadyExists = posicaoElemento(novo->valor);
+
+	if(alreadyExists) {
+		cout << "Elemento já existe na lista, tente outro.";
+		return;
+	}
+
 	if (primeiro == NULL)
 	{
 		primeiro = novo;
@@ -157,6 +165,7 @@ void excluirElemento() {
 
 		if(nextElement->valor == inputValue) {
 			aux->prox = nextElement->prox;
+
 			free(nextElement);
 			break;
 		}
@@ -178,8 +187,6 @@ void buscarElemento() {
 
 	cout << element->valor;
 }
-
-
 
 // retorna um ponteiro para o elemento buscado
 // ou NULL se o elemento n�o estiver na lista
